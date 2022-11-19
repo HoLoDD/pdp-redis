@@ -16,7 +16,7 @@ const schema = new Schema(
         make: { type: 'string' },
         model: { type: 'string' },
         image: { type: 'string' },
-        description: { type: 'string' },
+        description: { type: 'text' },
     },
     {
         dataStructure: 'JSON',
@@ -31,6 +31,7 @@ export async function createCar(data: any) {
     const car = repository.createEntity(data);
 
     const id = await repository.save(car);
+
     return id;
 }
 
@@ -47,6 +48,9 @@ export async function searchCars(q: string) {
 
     const repository = client.fetchRepository(schema);
 
+    await repository.createIndex();
+    console.log(q);
+
     const cars = await repository
         .search()
         .where('make')
@@ -54,8 +58,10 @@ export async function searchCars(q: string) {
         .or('model')
         .eq(q)
         .or('description')
-        .matches(q)
+        .match(q)
         .return.all();
+
+    console.log(cars);
 
     return cars;
 }

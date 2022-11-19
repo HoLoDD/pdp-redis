@@ -18,13 +18,27 @@ export default function CarForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            onSubmit={handleSubmit}
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                maxWidth: '50%',
+                margin: 'auto',
+                rowGap: '5px',
+            }}
+        >
             <input name="make" type="text" />
             <input name="model" type="text" />
             <input name="image" type="text" />
             <textarea name="description" typeof="text" />
 
-            <button type="submit">Create Car</button>
+            <button
+                type="submit"
+                style={{ height: '50px', borderRadius: '10px', border: 'none' }}
+            >
+                Create Car
+            </button>
         </form>
     );
 }
